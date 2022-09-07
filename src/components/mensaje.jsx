@@ -1,6 +1,6 @@
 import React from 'react'
 
-const mensaje = ({children, tipo}) => {
+const Mensaje = ({children, tipo}) => {
   return (
     <div className={`alerta ${tipo}`}>{children}
       
@@ -8,4 +8,4 @@ const mensaje = ({children, tipo}) => {
   )
 }
 
-export default mensaje
+export default Mensaje
