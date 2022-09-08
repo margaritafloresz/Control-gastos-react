@@ -15,6 +15,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [animarModal, setanimarModal] = useState(false);
 
+  const [gastoEditar, setGastoEditar] = useState({})
   
 
   const handleNuevoGasto = () => {
@@ -49,6 +50,7 @@ function App() {
           <main>
           <ListadoGasto
           gastos={gastos} 
+          setGastoEditar = {setGastoEditar}
           />
      
           </main>
