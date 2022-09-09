@@ -1,19 +1,39 @@
-import { useState} from 'react'
+import { useState, useEffect} from 'react'
 import mensaje from './Mensaje'
 import CerrarImg from "../img/cerrar.svg"
 import Mensaje from './Mensaje'
 
 
-const Modal = ({setModal,animarModal, setanimarModal, guardarGasto}) => {
+const Modal = ({
+    setModal,
+    animarModal,
+     setanimarModal,
+      guardarGasto,
+       gastoEditar,
+       setGastoEditar
+    }) => {
 
     const [mensaje, setMensaje] = useState('')
     const [nombre, setNombre] = useState('')
     const [cantidad, setCantidad] = useState('')
     const [categoria, setCategoria] = useState('')
+    const [id, setId] = useState('')
+    const  [fecha, setFecha] = useState('')
+
+    useEffect(()=>{
+        if(Object.keys(gastoEditar).length > 0){
+            setNombre(gastoEditar.nombre)
+            setCantidad(gastoEditar.cantidad)
+            setCategoria(gastoEditar.categoria)
+            setId(gastoEditar.id)
+            setFecha(gastoEditar.fecha)
+        }
+    }, [])
 
     const ocultarModal = () =>{
    
        setanimarModal(false)
+       setGastoEditar({})
 
        setTimeout(()=>{
         setModal(false)
@@ -29,7 +49,7 @@ const Modal = ({setModal,animarModal, setanimarModal, guardarGasto}) => {
             }, 3000)
         return;
        }
-       guardarGasto({nombre,cantidad,categoria})
+       guardarGasto({nombre,cantidad,categoria, id, fecha})
     })
 
   return (
@@ -44,7 +64,7 @@ const Modal = ({setModal,animarModal, setanimarModal, guardarGasto}) => {
      <form 
         onSubmit={handleSubmit}
         className={`formulario ${animarModal ? "animar" : 'cerrar'}`}>
-        <legend>Nuevo gasto</legend>
+        <legend>{gastoEditar.nombre ? 'Editar gasto' : 'Nuevo Gasto'}</legend>
         {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
         
       
@@ -91,7 +111,7 @@ const Modal = ({setModal,animarModal, setanimarModal, guardarGasto}) => {
 
         <input
              type="submit"
-            value="añadir gasto"
+            value={gastoEditar.nombre ? 'Guardar cambios' : 'Añadir Gasto'}
         />
 
 
